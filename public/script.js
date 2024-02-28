@@ -5,8 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(images => {
             const imagesList = document.getElementById('imagesList');
             images.forEach(image => {
+                console.log(`/storage/${image.unique_string}`);
                 const img = document.createElement('img');
-                img.src = image.file_path;
+                img.src = `/storage/${image.unique_string}`;
                 img.alt = 'Uploaded Image';
                 imagesList.appendChild(img);
             });

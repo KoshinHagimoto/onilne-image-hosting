@@ -13,7 +13,7 @@ import (
 )
 
 // This is the path where the uploaded images will be stored.
-const uploadPath = "pkg/storage"
+const uploadPath = "public/storage"
 
 // This is a simple init function that checks if the uploadPath exists. If it doesn't, it creates it.
 func init() {

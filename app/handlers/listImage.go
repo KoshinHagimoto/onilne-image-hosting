@@ -13,7 +13,7 @@ func ListImageHandler(db *sql.DB) http.HandlerFunc {
 
 		var images []object.Image
 
-		rows, err := db.Query("SELECT id, media_type, unique_string, file_path, created_at FROM images")
+		rows, err := db.Query("SELECT id, media_type, unique_string, file_path FROM images")
 		if err != nil {
 			http.Error(w, "Error retrieving the images", http.StatusInternalServerError)
 			return
@@ -22,8 +22,8 @@ func ListImageHandler(db *sql.DB) http.HandlerFunc {
 
 		for rows.Next() {
 			var img object.Image
-			if err := rows.Scan(&img.ID, &img.MediaType, &img.UniqueString, &img.FilePath, &img.Created_at); err != nil {
-				http.Error(w, "Error retrieving the images", http.StatusInternalServerError)
+			if err := rows.Scan(&img.ID, &img.MediaType, &img.UniqueString, &img.FilePath); err != nil {
+				http.Error(w, "Error converting data objects: "+err.Error(), http.StatusInternalServerError)
 				return
 			}
 			images = append(images, img)
