@@ -68,15 +68,15 @@ func main() {
 	//CORSミドルウェアを適用
 	r.Use(middleware.EnableCORS)
 
-	// フロントエンドのファイルを提供
-	publicDir := http.Dir("./public/")
-	fileServer := http.FileServer(publicDir)
-	r.PathPrefix("/").Handler(fileServer)
-
 	r.HandleFunc("/upload", handlers.UploadHandler(db)).Methods("POST")
 	r.HandleFunc("/images", handlers.ListImageHandler(db)).Methods("GET")
 	r.HandleFunc("/image/{mediaType}/{uniqueString}", handlers.ViewHandler).Methods("GET")
 	r.HandleFunc("/delete/{uniqueString}", handlers.DeleteHandler).Methods("GET")
+
+	// フロントエンドのファイルを提供
+	publicDir := http.Dir("./public/")
+	fileServer := http.FileServer(publicDir)
+	r.PathPrefix("/").Handler(fileServer)
 
 	http.ListenAndServe(":8080", r)
 }

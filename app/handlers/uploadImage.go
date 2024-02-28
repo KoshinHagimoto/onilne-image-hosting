@@ -6,18 +6,21 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 )
 
 // This is the path where the uploaded images will be stored.
-const uploadPath = "../../pkg/storage/"
+const uploadPath = "pkg/storage"
 
 // This is a simple init function that checks if the uploadPath exists. If it doesn't, it creates it.
 func init() {
 	if _, err := os.Stat(uploadPath); os.IsNotExist(err) {
-		os.MkdirAll(uploadPath, os.ModePerm)
+		if err := os.MkdirAll(uploadPath, os.ModePerm); err != nil {
+			log.Fatalf("Failed to create directory: %v", err)
+		}
 	}
 }
 
